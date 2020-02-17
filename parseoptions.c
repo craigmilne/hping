@@ -240,11 +240,13 @@ int parse_options(int argc, char **argv)
 			delay_changed = 1;
 			if (*ago_optarg == 'u') {
 				opt_waitinusec = TRUE;
+				long int usec_wait = atol(ago_optarg+1);
 				usec_delay.it_value.tv_sec =
-				usec_delay.it_interval.tv_sec = 0;
+				usec_delay.it_interval.tv_sec =
+					usec_wait / 1000000;
 				usec_delay.it_value.tv_usec = 
 				usec_delay.it_interval.tv_usec =
-					atol(ago_optarg+1);
+					usec_wait % 1000000;
 			}
 			else
 				sending_wait = strtol(ago_optarg, NULL, 0);
